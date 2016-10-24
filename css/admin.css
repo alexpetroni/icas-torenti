@@ -1,0 +1,84 @@
+@CHARSET "UTF-8";
+
+.icas-field{
+	display:inline-block;
+	margin-right: 2em;
+	margin-bottom: .5em;
+}
+
+.admin-fieldset-title{
+	font-weight: bold;
+	border-bottom: 1px solid #eee; 
+}
+
+.icas-admin-table{
+}
+
+.icas-admin-table thead	tr{
+	text-align: center;
+	font-weight: bold;
+}
+
+.icas-admin-table thead	tr.icas-secondary-thead{
+	font-weight: normal;
+}
+
+.icas-admin-table tbody	td{
+
+	text-align:center;
+}
+
+.icas-admin-table tbody	td .icas-field{
+	margin-right: 0;
+}
+
+
+.ap_icas_long_spur_section_header .admin-fieldset-title{
+	display:inline-block;
+	margin-right: 20px;
+}
+.ap_icas_long_spur_section_header .button{
+	float:right;
+	margin-right: 50px;
+	margin-left: 20px;
+}
+
+.add_sector_btn_wrapper{
+		text-align:right;
+		margin-bottom: 10px;
+}
+
+.long_sector{
+	margin-bottom: 10px;
+}
+
+.remove_sector_btn_container{
+	float:right;
+	margin-right: 1em;
+	margin-top: 2px;
+}
+
+.total_lenght{
+	display:inline-block;
+	float: left;
+}
+
+.icas_admin_thumbs{
+	display:inline-block;
+	margin: 4px;
+	position: relative;
+}
+
+
+.icas_admin_thumbs a.delete_thumb{
+	position:absolute;
+	padding: 3px 5px;
+	right: 0;
+	display:none;
+}
+
+.icas_admin_thumbs:hover a.delete_thumb{
+	display: block;
+	background: rgba(255, 255, 255, .8);
+	cursor: pointer;
+}

@@ -1,0 +1,268 @@
+@CHARSET "UTF-8";
+.area_group span.metabox_label[title]{
+	cursor: help;
+}
+
+
+#transv_constr_dimensions .fields_title{
+	background:	#fafafa;
+}
+
+#transv_constr_dimensions{
+	text-align:center;
+}
+
+.row.area_group{
+	
+}
+
+.fields_title{
+	margin-top: 16px;
+}
+
+.submit_btn_container{
+	text-align:center;
+	padding: 1em 0;
+}
+
+#transversals, 
+#longitudinals{
+	display:none;
+}
+
+.icas-data-label,
+.icas-data-val{
+	display:inline-block;
+	min-width: 150px;
+}
+
+.icas-table td{
+	border: 1px solid #ddd;
+	text-align:center;
+}
+
+.icas-data-label,
+.icas-data-val{
+	border-bottom: 1px solid #ddd;
+}
+
+.fp-articles{
+	margin-bottom: 2em;
+}
+
+.fp-articles .article-title{
+	display:inline-block;
+	font-weight:700;
+	line-height:1.1;
+}
+
+.fp-articles .article-excerpt{
+	display:inline-block;
+	font-weight:400;
+	line-height:1.1;
+	font-size: .8rem;
+	color: #565656;
+}
+
+.fp-articles .article-time{
+	color: #222;
+	font-size: .8rem;
+	font-weight: 700;
+	text-align: right;
+}
+
+li.accordion-navigation a{
+	border-bottom: 1px solid #ccc;
+}
+
+
+.ct-label.ct-horizontal.ct-end{
+	text-align: right;
+	display:block;
+}
+
+#panel2v .ct-chart-bar .ct-label.ct-horizontal.ct-end{
+	text-align: right;
+}
+
+.sector_title{
+	text-align: center;
+}
+
+.icas-table thead tr td{
+	font-weight: 400;
+	font-size: .75rem;
+	line-height: 1;
+}
+
+.icas-table thead tr:first-child td{
+	font-weight: 400;
+	font-size: 1rem;
+}
+
+.sector_title{
+	border-top: 3px #ddd solid;
+	margin-top: 3rem;
+}
+
+.sector_title span{
+	font-size: 2rem;
+	font-weight: 400;
+	color: #555;
+	background-color: #fff;
+	display: inline-block;
+	padding: 0 1rem;
+	line-height: 1;
+	margin-top: -1rem;
+}
+
+
+/* === Single construction === */
+ul.single-constr-gallery{
+	margin: 0;
+}
+
+li.single-constr-thumbnail{
+	float: left;
+	list-style: none;
+	margin: 15px 15px 0 0;
+}
+
+li.single-constr-thumbnail img{
+	width:90px;
+	height: 90px;
+}
+
+li.single-constr-thumbnail:nth-child(3n) {
+	margin-right: 0;
+}
+li.single-constr-thumbnail:nth-child(4n) {
+	clear: left;
+}
+
+
+a.single-constr-main-thumbnail{
+	display:block;
+	margin-top: 75px;
+}
+
+.download-list-container{
+	text-align: right;
+	float: right;
+}
+
+#transversals ul.accordion, 
+#longitudinals ul.accordion{
+	margin-top: 2em;
+}
+
+a.accordion-title{
+	font-size: 1rem;
+}
+
+
+/* === Map === */
+
+#single-construction-map-container{
+	height: 350px;
+}
+
+#single-construction-map{
+	height: 100%;
+}
+
+
+/* === Graphics === */
+
+#autosave-img{
+	display:none;
+	position:absolute;
+	top: 50%;
+	right: 50%;
+}
+
+#results-tabs-content-vertical{
+	min-height: 500px;
+}
+
+/* Use this selector to override the line style on a given series */
+.ct-ys-years-distribution .ct-line {
+  /* Set the colour of this series line */
+  stroke: red;
+  /* Control the thikness of your lines */
+  stroke-width: 1px;
+  /* Create a dashed line with a pattern */
+  stroke-dasharray: 5px 5px;
+}
+
+.ct-bar-ys-segment-distribution .ct-series-a .ct-bar,
+.ct-pie-ys-segment-distribution .ct-series-a .ct-slice-pie{
+	fill: red;
+	stroke: red;
+}
+.ct-bar-ys-segment-distribution .ct-series-b .ct-bar,
+.ct-pie-ys-segment-distribution .ct-series-b .ct-slice-pie{
+	fill: orange;
+	stroke: orange;
+}
+.ct-bar-ys-segment-distribution .ct-series-c .ct-bar,
+.ct-pie-ys-segment-distribution .ct-series-c .ct-slice-pie{
+	fill: yellow;
+	stroke: yellow;
+}
+.ct-bar-ys-segment-distribution .ct-series-d .ct-bar,
+.ct-pie-ys-segment-distribution .ct-series-d .ct-slice-pie{
+	fill: green;
+	stroke: green;
+}
+
+.ct-bar-ys-segment-distribution .ct-series-e .ct-bar,
+.ct-pie-ys-segment-distribution .ct-series-e .ct-slice-pie{
+	fill: blue;
+	stroke: blue;
+}
+
+/* === Under Graphics Tables === */
+.color-legend{
+	float:left;
+	width:1em;
+	height: 1em;
+	background: #f00;
+	margin-top: .25em;
+	margin-right: .5em;
+}
+
+.color-legend.legend-ys-20{
+	background: #e31a1c;
+}
+
+.color-legend.legend-ys-40{
+	background: #ff7f00;
+}
+
+.color-legend.legend-ys-60{
+	background: #fdbf6f;
+}
+
+.color-legend.legend-ys-80{
+	background: #33a02c;
+}
+
+.color-legend.legend-ys-100{
+	background: #1f78b4; 
+}
+
+.under-graph-table{
+	margin-top: 2em;
+}
+
+.table_small{
+	font-size: .8em;
+}
+
+@media screen and (max-width: 40em) {
+	a.single-constr-main-thumbnail{
+	display:block;
+	margin-top: 3em;
+}
+}
