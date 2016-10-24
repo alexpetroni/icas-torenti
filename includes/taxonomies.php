@@ -13,7 +13,7 @@ function ap_icas_register_icas_taxonomies(){
 			'hierarchical' => true,
 			'query_var' => 'area',
 			'show_tagcloud' => true,
-			//'show_in_menu' => false,
+			'show_in_menu' => false,
 			'rewrite' => array(
 					'slug' => 'area',
 					'with_front' => false

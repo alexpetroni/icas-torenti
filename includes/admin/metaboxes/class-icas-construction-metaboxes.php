@@ -33,7 +33,8 @@ class Icas_Construction_Metaboxes{
 
 	// remove area taxonomy from the right side for construction
 	public function remove_area_meta() {
-		//remove_meta_box( 'areadiv', 'construction', 'side' );
+		
+		remove_meta_box( 'areadiv', 'construction', 'side' );
 		remove_meta_box( 'tagsdiv-construction_type', 'construction', 'side' );
 		remove_meta_box( 'pageparentdiv', 'construction', 'side' );
 		remove_meta_box( 'icas_locationdiv', 'construction', 'side' );

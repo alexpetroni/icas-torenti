@@ -21,7 +21,12 @@ class Icas_Admin{
 		// Include metaboxes js files
 		add_action('admin_print_scripts-post.php', array( $this, 'image_admin_scripts' ) );
 		add_action('admin_print_scripts-post-new.php', array( $this, 'image_admin_scripts' ) );
+		
+		// to avoid the expensive query which generate Custom Fields meta box (wp-admin/includes/templates.php function meta_form(){}
+		add_filter( 'postmeta_form_keys', array($this, 'limit_postmeta'), 10, 3  );
 	}
+	
+
 	
 	
 	
@@ -68,6 +73,15 @@ class Icas_Admin{
 			'all'
 					);
 		}	
+	}
+
+	 
+	 /*
+	  * Returning a non-null value will effectively short-circuit and avoid a
+	  *  expensive query against postmeta.
+	  */
+	public function limit_postmeta( $string, $post ) {
+		return array(null);
 	}
 	
 }
