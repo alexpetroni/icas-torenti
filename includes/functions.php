@@ -1120,7 +1120,9 @@ function ap_icas_calculate_ys( $args = array() ){
 }
 
 
-
+// ====================================================================
+//				LUCRARI TRANSVERSALE FARA RADIER
+// ====================================================================
 function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	$sum = 0;
@@ -1136,13 +1138,14 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	$decas_ilim = 1;
 	$decas_Ii = ( (int) $args['ap_icas_trans_damage_dec_left'] + (int) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
-	
+
 	
 	$sum += .92 * min( $decas_Ii / $decas_ilim , 1 );
 	
 	// afuiere
 	$afuiere_ilim = 2;
-	$afuiere_Ii = (int) $args['ap_icas_trans_damage_af_height'] * (int) $args['ap_icas_trans_damage_af_percent'] / 100 ;	
+	$afuiere_Ii = (int) $args['ap_icas_trans_damage_af_height'] * (int) $args['ap_icas_trans_damage_af_percent'] / 100 ;
+
 	$sum +=  2.52 * min( $afuiere_Ii / $afuiere_ilim , 1 );
 	
 	
@@ -1158,6 +1161,8 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	$fisurare_ilim = 10;
 	$fisurare_Ii = $lo/$b + $lv/ ($ye + $h );
+	
+
 	
 	$sum += .74 * min( $fisurare_Ii / $fisurare_ilim , 1);	
 	
@@ -1177,7 +1182,7 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	// Eroziune
 	$eroziune_ilim = 50;
 	$eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * (int) $args['ap_icas_trans_damage_erosion_percent'] / 100 ;
-	$sum += 0.82 * min( $eroziune_Ii/$eroziune_Ii, 1 );
+	$sum += 0.82 * min( $eroziune_Ii/$eroziune_ilim, 1 );
 	
 	
 	// ================================================================
@@ -1189,20 +1194,23 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	$rad_fisurare_Ii = (int) $args['ap_icas_trans_apron_crack_nr'] * (int) $args['ap_icas_trans_apron_crack_percent'] / 100;
 	$sum += 0.66 * min( $rad_fisurare_Ii / $rad_fisurare_ilim, 1 );
 	
+	
 	// Desprindere
 	$rad_despr_ilim = 1;
 	$rad_despr_Ii = (int) $args['ap_icas_trans_apron_detach'];
 	$sum += 1.33 * min( $rad_despr_Ii / $rad_despr_ilim , 1 );
 	
+	
 	// Afuiere
 	$rad_afuiere_ilim = 1;
 	$rad_afuire_Ii = (int) $args['ap_icas_trans_apron_af_height'] * (int) $args['ap_icas_trans_apron_af_percent'] / 100;
 	$sum += 0.24 * min( $rad_afuire_Ii / $rad_afuiere_ilim , 1 );
+
 	
 	// Eroziune
 	$rad_eroziune_ilim = 50;
 	$rad_eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * (int) $args['ap_icas_trans_apron_erosion_percent'] / 100 ;
-	$sum += 0.52 * min( $rad_eroziune_Ii / $rad_eroziune_ilim , 50 );
+	$sum += 0.52 * min( $rad_eroziune_Ii / $rad_eroziune_ilim , 1 );
 	
 	// ================================================================
 	//			Sistem disipator
@@ -1227,7 +1235,7 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	// Fisurare	
 	$Lr =  (int) $args['ap_icas_trans_dim_lr'];
 	$zid_cond_fis_ilim = 5;
-	$zid_cond_fis_Ii = ( (int) $args['ap_icas_trans_sidewall_left_horiz_length'] + (int) $args['ap_icas_trans_sidewall_right_horiz_length'] + (int) $args['ap_icas_trans_sidewall_left_vert_length'] + (int) $args['ap_icas_trans_sidewall_right_vert_length'] ) /$Lr ;
+	$zid_cond_fis_Ii = ( (int) $args['ap_icas_trans_sidewall_left_horiz_length'] + (int) $args['ap_icas_trans_sidewall_right_horiz_length'] + (int) $args['ap_icas_trans_sidewall_left_vert_length'] + (int) $args['ap_icas_trans_sidewall_right_vert_length'] ) /(2 * $Lr) ;
 	$sum += 0.31 * min( $zid_cond_fis_Ii / $zid_cond_fis_ilim, 1 );
 	
 	// Desprindere
@@ -1239,7 +1247,7 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	// Eroziune
 	$zid_cond_eroz_ilim = 50;
 	$zid_cond_eroz_Ii = ( (int) $args['ap_icas_trans_sidewall_left_abrasion_deep'] * (int) $args['ap_icas_trans_sidewall_left_abrasion_percent'] + (int) $args['ap_icas_trans_sidewall_right_abrasion_deep'] * (int) $args['ap_icas_trans_sidewall_right_abrasion_percent'] ) / ( 2 * 100 );
-	$sum += .18 * min( $zid_cond_eroz_Ii / $zid_cond_eroz_ilim , 1 );
+	$sum += 0.18 * min( $zid_cond_eroz_Ii / $zid_cond_eroz_ilim , 1 );
 	
 	
 	// ================================================================
@@ -1276,12 +1284,18 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	$YaREF = 31.32;
 	
-	$ys = 100 * ( 1000 / $YaREF ) * Math.sqrt( $sum );
+	error_log('$sum '. $sum);
+	error_log('sqrt( $sum ) '.sqrt( $sum ));
+	error_log('( 1000 / $YaREF ) * sqrt( $sum ) '. (( 1000 / $YaREF ) * sqrt( $sum )));
 	
-	return $ys;
+	$ys = 100 - ( 1000 / $YaREF ) * sqrt( $sum );
+	
+	return 'cu radier : '. $ys;
 }
 
-
+// ====================================================================
+//				LUCRARI TRANSVERSALE FARA RADIER
+// ====================================================================
 function ap_icas_calculate_ys_for_trans_without_apron( $args ){	
 	
 	$sum = 0;
@@ -1318,7 +1332,7 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	}
 	
 	$fisurare_ilim = 5;
-	$fisurare_Ii = $lo / $b + $lv / ($ye + $h );
+	$fisurare_Ii = ($lo / $b) + $lv / ($ye + $h );
 	
 	$sum += 2.15 * min( $fisurare_Ii / $fisurare_ilim , 1);	
 	
@@ -1337,15 +1351,18 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	
 	// Eroziune
 	$eroziune_ilim = 50;
-	$eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * (int) $args['ap_icas_trans_damage_erosion_percent'] / 100 ;
-	$sum += 1.92 * min( $eroziune_Ii / $eroziune_Ii, 1 );
+	$eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * ((int) $args['ap_icas_trans_damage_erosion_percent'] /100 );
+	$sum += 1.92 *  min( $eroziune_Ii / $eroziune_ilim, 1 );
+/* 	error_log('$eroziune_Ii ' . $eroziune_Ii);
 	
+	error_log('$eroziune_Ii / $eroziune_ilim ' . $eroziune_Ii / $eroziune_ilim);
+	error_log('min( $eroziune_Ii / $eroziune_ilim, 1 ) ' . min( $eroziune_Ii / $eroziune_ilim, 1) ); */
 	
-	$YaREF = 27.91;
+	$YaREF = 38.59;
 	
-	$ys = 100 * ( 1000 / $YaREF ) * Math.sqrt( $sum );
+	$ys = 100 - ( 1000 / $YaREF ) * sqrt( $sum );
 	
-	return $ys;
+	return 'fara radier : '. $ys;
 	
 }
 
@@ -1593,16 +1610,16 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$pinteni_eroziune_ilim = 50;
 	
-	$sum += .55 * min( $pinteni_eroziune_Ii  / $pinteni_desprindere_centrala_ilim , 1 );
+	$sum += .55 * min( $pinteni_eroziune_Ii  / $pinteni_eroziune_ilim , 1 );
 	
 	
 	
 	
 	$YaREF = 27.62;
 	
-	$ys = 100 * ( 1000 / $YaREF ) * Math.sqrt( $sum );
+	$ys = 100 - ( 1000 / $YaREF ) * sqrt( $sum );
 	
-	return $ys;
+	return 'longitudinal : '. $ys;
 	
 }
 
