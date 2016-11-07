@@ -69,4 +69,5 @@ class Constructions_WP_Query extends WP_Query{
 		$sql = " post_title ASC  ";
 		return $sql;
 	}
+
 }

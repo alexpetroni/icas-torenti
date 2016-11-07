@@ -88,7 +88,7 @@ function ap_icas_search_result(){
 			$download_link = http_build_query( $qs );
 			
 			//echo $download_link;
-			//echo '<div class="download-list-container"><a target="_blank" href="/?'.$download_link.'">'.__("Download lista", "icas").'</a></div>';
+			echo '<div class="download-list-container"><a target="_blank" href="/?'.$download_link.'">'.__("Download lista", "icas").'</a></div>';
 		}
 		 	echo "<h2>".__("Lucrări", "icas") .": ". $search_query->found_posts."</h2>"; // num pages:" . $search_query->max_num_pages ."
 			

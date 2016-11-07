@@ -96,4 +96,61 @@ class Icas_Construction{
 		return empty( $this->long_sectors );
 	}
 	
+	
+	
+	public function get_meta_as_string( $key ){
+		if( ! isset( $this->meta ) ){
+			$this->meta = get_post_meta( $this->id );
+		}
+	
+		if( isset( $this->meta[$key] ) ){
+			return implode(',' , $this->meta[$key] );
+		}
+	
+		return '';
+	}
+	
+	
+	public function get_cadastral_code(){
+	
+		// get area taxonomy for this construction
+		$cod_bazin_tax = wp_get_post_terms( $this->id, 'area' );
+		// sorting the taxonomy
+		if( $cod_bazin_tax ){
+			$cod_bazin_tax = ap_icas_sort_taxonomy_hierarchy( $cod_bazin_tax );
+		}
+		
+		$cod_bazin = array_fill( 0, ICAS_AREA_TAX_DEEP, '' );
+		
+		// level 0 is provided as term_id value, next levels as taxonomy name
+		if( isset( $cod_bazin_tax[0] )  && isset( $cod_bazin_tax[0]->term_id ) ){
+			$cod_bazin[0] = $cod_bazin_tax[0]->name;
+		
+			// if is set the 0 level, update the rest with the values
+			for( $i = 1; $i < ICAS_AREA_TAX_DEEP; $i++ ){
+		
+				if( isset( $cod_bazin_tax[$i] )  && isset( $cod_bazin_tax[$i]->name )){
+					$cod_bazin[$i] = $cod_bazin_tax[$i]->name;
+				}else{
+					$cod_bazin[$i] = '';
+				}
+			}
+		}
+		
+		
+		return implode('-', array_filter($cod_bazin) );
+		
+	}
+	
+	
+	public function get_term($term, $index = 0, $term_field = 'name'){
+		$terms_arr = wp_get_object_terms( $this->id, $term );
+		if($terms_arr && $terms_arr[$index]){
+			return $terms_arr[$index]->$term_field;
+		}
+		
+		return '';
+	}
+
+	
 }
