@@ -39,7 +39,7 @@ function ap_icas_search_form(){
 	// Execution Year
 	// =====================================
 	
-	echo '<div class="icas-field small-12 large-8 columns">';
+	echo '<div class="icas-field small-12 large-4 columns">';
 	echo '<div class="">'.__("An executie", "icas").':</div>';
 	echo '<div class="row">';
 	
@@ -76,7 +76,57 @@ function ap_icas_search_form(){
 	ap_icas_get_form_element( $construction_date_end_args );
 	echo '</div>';
 	
-	echo '</div></div></div>';
+	echo '</div></div>';
+	
+	
+	// =====================================
+	// Inventory Year
+	// =====================================
+	echo '<div class="icas-field small-12 large-4 columns">';
+	echo '<div class="">'.__("An Inventariere", "icas").':</div>';
+	echo '<div class="row">';
+	
+	
+	
+	$years_arr = array();
+	$current_year = (int) date("Y");
+	for( $i = 0; $i < 100; $i++ ){
+		$y = $current_year - $i;
+		$years_arr[$y] = $y;
+	}
+	
+	echo '<div class="icas-field small-12 large-6 columns">';
+	
+	$construction_review_date_args = array(
+			'type'	=>	'select',
+			'name'	=>	'ap_icas_construction_review_date_min',
+			'options'	=>	 (array("" => __("Intre anul" , 'icas')) + $years_arr),
+			'value'	=>	isset( $ap_icas_construction_review_date_min ) ? 	$ap_icas_construction_review_date_min : ''
+	);
+	ap_icas_get_form_element( $construction_review_date_args );
+	
+	echo '</div>';
+	
+	echo '<div class="icas-field small-12 large-6 columns">';
+	
+	$construction_date_end_args = array(
+			'type'	=>	'select',
+			'name'	=>	'ap_icas_construction_review_date_max',
+			'options'	=>	(array("" => __("Si anul" , 'icas')) + $years_arr) ,
+			'value'	=>	isset( $ap_icas_construction_review_date_max ) ? $ap_icas_construction_review_date_max : ''
+	
+	);
+	ap_icas_get_form_element( $construction_date_end_args );
+	echo '</div>';
+	
+	
+	echo '</div></div>';
+	
+	
+	
+	
+			
+	echo '</div>';
 	
 	
 	echo '<div class="area_group row">';

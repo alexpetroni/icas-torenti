@@ -873,7 +873,8 @@ function ap_icas_get_constructions_query_args_from_str( $qs, $query_args = array
 	
 	$general_meta_fields = array(
 			'ap_icas_construction_date',
-			'ap_icas_construction_ys'
+			'ap_icas_construction_ys',
+			'ap_icas_construction_review_date'
 	);
 	
 	// add meta query for Ys and construction_date
