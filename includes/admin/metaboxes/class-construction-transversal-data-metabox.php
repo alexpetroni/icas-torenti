@@ -13,8 +13,10 @@ class Icas_Construction_Transversal_Data_Metabox{
 				'ap_icas_trans_dim_b',				
 				'ap_icas_trans_dim_lr',
 				'ap_icas_trans_dim_br',
+				'ap_icas_trans_dim_hz',
 				'ap_icas_trans_dim_lc',
 				'ap_icas_trans_dim_bc',
+				'ap_icas_trans_dim_bp', 
 				'ap_icas_trans_apron_teeth_total',
 				
 				'ap_icas_trans_damage_dec_left',
@@ -180,9 +182,12 @@ class Icas_Construction_Transversal_Data_Metabox{
 		ap_icas_admin_fieldset_title( __('Elemente dimensionale', 'icas') );
 		
 		echo '<table class="icas-admin-table"><thead>
-				<tr><td colspan="5">'.__('Lucrare propriu-zisă', 'icas').'</td>
-				<td colspan="4">'.__('Radier', 'icas').'</td>
-				<td  colspan="2">'.__('Confuzor', 'icas').'</td></tr>
+				<tr>
+				<td colspan="5">'.__('Lucrare propriu-zisă', 'icas').'</td>
+				<td colspan="5">'.__('Radier', 'icas').'</td>
+				<td  colspan="2">'.__('Confuzor', 'icas').'</td>
+				<td>'.__('Pinten terminal', 'icas').'</td>
+				</tr>
 				</thead>
 					<tbody>
 					<tr>
@@ -194,9 +199,11 @@ class Icas_Construction_Transversal_Data_Metabox{
 						<td>'.__("Lr", "icas").' (m)</td>
 						<td>'.__("Br", "icas").'  (m)</td>
 						<td>'.__("tip disip.", "icas").'</td>
+						<td>'.__("Hz", "icas").'  (m)</td>
 						<td>'.__("Nr. total de dinti", "icas").'</td>	
 						<td>'.__("Lc", "icas").'  (m)</td>
 						<td>'.__("Bc", "icas").'  (m)</td>
+						<td>'.__("Bp", "icas").'  (m)</td>
 					</tr>';
 		
 		$trans_dim_arr = array(
@@ -208,9 +215,11 @@ class Icas_Construction_Transversal_Data_Metabox{
 				'ap_icas_trans_dim_lr',
 				'ap_icas_trans_dim_br',
 				'trans_disip_type',
+				'ap_icas_trans_dim_hz',
 				'ap_icas_trans_apron_teeth_total',
 				'ap_icas_trans_dim_lc',
-				'ap_icas_trans_dim_bc',				
+				'ap_icas_trans_dim_bc',		
+				'ap_icas_trans_dim_bp'
 		);
 		
 		echo '<tr>';

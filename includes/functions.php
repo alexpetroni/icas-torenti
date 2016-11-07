@@ -581,9 +581,9 @@ function ap_icas_get_meta_query_min_max_args($meta_name, $arr, $comparation_type
 	if( "" !=  $min && "" != $max ){
 	
 		if( $min == $max ){
-			$meta_args['value'] = (int) $max;
+			$meta_args['value'] = (float) $max;
 		}else{
-			$range = array( (int) $min, (int) $max );
+			$range = array( (float) $min, (float) $max );
 			asort( $range );
 			$meta_args['value'] = $range;
 			$meta_args['compare'] = 'BETWEEN';
@@ -592,13 +592,13 @@ function ap_icas_get_meta_query_min_max_args($meta_name, $arr, $comparation_type
 	}else{
 		// if only min are set
 		if( "" !=  $min ){
-			$meta_args['value'] = (int) $min;
+			$meta_args['value'] = (float) $min;
 			$meta_args['compare'] = '>=';
 		}
 	
 		// if only max are set
 		if( "" !=  $max ){
-			$meta_args['value'] = (int) $max;
+			$meta_args['value'] = (float) $max;
 			$meta_args['compare'] = '<=';
 		}
 	}
@@ -1131,29 +1131,29 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	// ================================================================
 	
 	// decastrare
-	$ye = (int) $args['ap_icas_trans_dim_ye'];	
-	$h = (int) $args['ap_icas_trans_dim_h'];
+	$ye = (float) $args['ap_icas_trans_dim_ye'];	
+	$h = (float) $args['ap_icas_trans_dim_h'];
 	
 	if( $ye + $h == 0 ) return -1 ;
 	
 	$decas_ilim = 1;
-	$decas_Ii = ( (int) $args['ap_icas_trans_damage_dec_left'] + (int) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
+	$decas_Ii = ( (float) $args['ap_icas_trans_damage_dec_left'] + (float) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
 
 	
 	$sum += .92 * min( $decas_Ii / $decas_ilim , 1 );
 	
 	// afuiere
 	$afuiere_ilim = 2;
-	$afuiere_Ii = (int) $args['ap_icas_trans_damage_af_height'] * (int) $args['ap_icas_trans_damage_af_percent'] / 100 ;
+	$afuiere_Ii = (float) $args['ap_icas_trans_damage_af_height'] * (float) $args['ap_icas_trans_damage_af_percent'] / 100 ;
 
 	$sum +=  2.52 * min( $afuiere_Ii / $afuiere_ilim , 1 );
 	
 	
 	// fisurare	
-	$lo = (int) $args['ap_icas_trans_damage_h_crak_dev_l'] + (int) $args['ap_icas_trans_damage_h_crak_undev_l'];
-	$lv = (int) $args['ap_icas_trans_damage_v_crak_dev_l'] + (int) $args['ap_icas_trans_damage_v_crak_undev_l'];
+	$lo = (float) $args['ap_icas_trans_damage_h_crak_dev_l'] + (float) $args['ap_icas_trans_damage_h_crak_undev_l'];
+	$lv = (float) $args['ap_icas_trans_damage_v_crak_dev_l'] + (float) $args['ap_icas_trans_damage_v_crak_undev_l'];
 	
-	$b = (int) $args['ap_icas_trans_dim_b'];
+	$b = (float) $args['ap_icas_trans_dim_b'];
 	
 	if( $b == 0 ){
 		return -1;
@@ -1169,19 +1169,19 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	// desprindere zona deversata
 	$desrp_zona_dev_ilim = 1;
-	$desrp_zona_dev_Ii = (int) $args['ap_icas_trans_damage_detach_dev'] / 100;
+	$desrp_zona_dev_Ii = (float) $args['ap_icas_trans_damage_detach_dev'] / 100;
 	$sum += 1.90 * min( $desrp_zona_dev_Ii / $desrp_zona_dev_ilim , 1 );
 	
 	
 	// desprindere aripi 
 	$desrp_aripi_ilim = 1;
-	$desrp_aripi_Ii = ( (int) $args['ap_icas_trans_damage_detach_undev_left'] + (int) $args['ap_icas_trans_damage_detach_undev_right'] ) / ( 2 * 100 ) ; // medium between the two
+	$desrp_aripi_Ii = ( (float) $args['ap_icas_trans_damage_detach_undev_left'] + (float) $args['ap_icas_trans_damage_detach_undev_right'] ) / ( 2 * 100 ) ; // medium between the two
 	$sum += 3.27 * min( $desrp_aripi_Ii / $desrp_aripi_ilim , 1 );
 	
 	
 	// Eroziune
 	$eroziune_ilim = 50;
-	$eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * (int) $args['ap_icas_trans_damage_erosion_percent'] / 100 ;
+	$eroziune_Ii = (float) $args['ap_icas_trans_damage_erosion_height'] * ( (float) $args['ap_icas_trans_damage_erosion_percent'] / 100 ) ;
 	$sum += 0.82 * min( $eroziune_Ii/$eroziune_ilim, 1 );
 	
 	
@@ -1191,25 +1191,25 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	// Fisurare
 	$rad_fisurare_ilim = 5;
-	$rad_fisurare_Ii = (int) $args['ap_icas_trans_apron_crack_nr'] * (int) $args['ap_icas_trans_apron_crack_percent'] / 100;
+	$rad_fisurare_Ii = (float) $args['ap_icas_trans_apron_crack_nr'] * (float) $args['ap_icas_trans_apron_crack_percent'] / 100;
 	$sum += 0.66 * min( $rad_fisurare_Ii / $rad_fisurare_ilim, 1 );
 	
 	
 	// Desprindere
 	$rad_despr_ilim = 1;
-	$rad_despr_Ii = (int) $args['ap_icas_trans_apron_detach'];
+	$rad_despr_Ii = (float) $args['ap_icas_trans_apron_detach'] / 100;
 	$sum += 1.33 * min( $rad_despr_Ii / $rad_despr_ilim , 1 );
 	
 	
 	// Afuiere
-	$rad_afuiere_ilim = 1;
-	$rad_afuire_Ii = (int) $args['ap_icas_trans_apron_af_height'] * (int) $args['ap_icas_trans_apron_af_percent'] / 100;
+	$rad_afuiere_ilim = 1.5;
+	$rad_afuire_Ii = (float) $args['ap_icas_trans_apron_af_height'] * (float) $args['ap_icas_trans_apron_af_percent'] / 100;
 	$sum += 0.24 * min( $rad_afuire_Ii / $rad_afuiere_ilim , 1 );
 
 	
 	// Eroziune
 	$rad_eroziune_ilim = 50;
-	$rad_eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * (int) $args['ap_icas_trans_apron_erosion_percent'] / 100 ;
+	$rad_eroziune_Ii = (float) $args['ap_icas_trans_damage_erosion_height'] * (float) $args['ap_icas_trans_apron_erosion_percent'] / 100 ;
 	$sum += 0.52 * min( $rad_eroziune_Ii / $rad_eroziune_ilim , 1 );
 	
 	// ================================================================
@@ -1219,12 +1219,12 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	// Desprindere dinti
 	if( ! empty ( $args['ap_icas_trans_apron_teeth_total']) ){ // if has teeth
 		$disip_ilim = 1;
-		$disip_Ii = (int) $args['ap_icas_trans_apron_teeth_detach'] / (int) $args['ap_icas_trans_apron_teeth_total'];
+		$disip_Ii = (float) $args['ap_icas_trans_apron_teeth_detach'] / (float) $args['ap_icas_trans_apron_teeth_total'];
 		$sum += 0.03 * min( $disip_Ii / $disip_ilim , 1 );
 	}
 	// Desprindere contrabaraj
 	$despr_contrabaraj_ilim = 1;
-	$despr_contrabaraj_Ii = (int) $args['ap_icas_trans_apron_detach_counter_dam'] / 100;
+	$despr_contrabaraj_Ii = (float) $args['ap_icas_trans_apron_detach_counter_dam'] / 100;
 	$sum += 0.10 * min( $despr_contrabaraj_Ii / $despr_contrabaraj_ilim , 1 );
 	
 	
@@ -1233,20 +1233,20 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	// ================================================================
 	
 	// Fisurare	
-	$Lr =  (int) $args['ap_icas_trans_dim_lr'];
+	$Lr =  (float) $args['ap_icas_trans_dim_lr'];
 	$zid_cond_fis_ilim = 5;
-	$zid_cond_fis_Ii = ( (int) $args['ap_icas_trans_sidewall_left_horiz_length'] + (int) $args['ap_icas_trans_sidewall_right_horiz_length'] + (int) $args['ap_icas_trans_sidewall_left_vert_length'] + (int) $args['ap_icas_trans_sidewall_right_vert_length'] ) /(2 * $Lr) ;
+	$zid_cond_fis_Ii = ( (float) $args['ap_icas_trans_sidewall_left_horiz_length'] + (float) $args['ap_icas_trans_sidewall_right_horiz_length'] + (float) $args['ap_icas_trans_sidewall_left_vert_length'] + (float) $args['ap_icas_trans_sidewall_right_vert_length'] ) /(2 * $Lr) ;
 	$sum += 0.31 * min( $zid_cond_fis_Ii / $zid_cond_fis_ilim, 1 );
 	
 	// Desprindere
 	$zid_cond_despr_ilim = 1;
-	$zid_cond_despr_Ii = ( (int) $args['ap_icas_trans_sidewall_right_displaced'] + (int) $args['ap_icas_trans_sidewall_left_displaced'] ) / ( 2 *100 );
+	$zid_cond_despr_Ii = ( (float) $args['ap_icas_trans_sidewall_right_displaced'] + (float) $args['ap_icas_trans_sidewall_left_displaced'] ) / ( 2 *100 );
 	$sum += 1.0 * min( $zid_cond_despr_Ii / $zid_cond_despr_ilim , 1 );
 	
 	
 	// Eroziune
 	$zid_cond_eroz_ilim = 50;
-	$zid_cond_eroz_Ii = ( (int) $args['ap_icas_trans_sidewall_left_abrasion_deep'] * (int) $args['ap_icas_trans_sidewall_left_abrasion_percent'] + (int) $args['ap_icas_trans_sidewall_right_abrasion_deep'] * (int) $args['ap_icas_trans_sidewall_right_abrasion_percent'] ) / ( 2 * 100 );
+	$zid_cond_eroz_Ii = ( (float) $args['ap_icas_trans_sidewall_left_abrasion_deep'] * (float) $args['ap_icas_trans_sidewall_left_abrasion_percent'] /100 + (float) $args['ap_icas_trans_sidewall_right_abrasion_deep'] * (float) $args['ap_icas_trans_sidewall_right_abrasion_percent'] / 100 ) /  2 ;
 	$sum += 0.18 * min( $zid_cond_eroz_Ii / $zid_cond_eroz_ilim , 1 );
 	
 	
@@ -1256,29 +1256,29 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 
 	// Decastrare
-	$Hz = max( 1, (int) $args['ap_icas_trans_dim_h'] );
+	$Hz = max( 1, (float) $args['ap_icas_trans_dim_h'] );
 	$pinten_decastr_ilim = 1;
-	$pinten_decastr_Ii = ( (int) $args['ap_icas_trans_final_spur_decastr_left'] + (int) $args['ap_icas_trans_final_spur_decastr_right'] ) / $Hz ;
+	$pinten_decastr_Ii = ( (float) $args['ap_icas_trans_final_spur_decastr_left'] + (float) $args['ap_icas_trans_final_spur_decastr_right'] ) / $Hz ;
 	$sum += 0.59 * min( $pinten_decastr_Ii / $pinten_decastr_ilim, 1 );
 	
 
 	// Fisurare
-	$Bp = (int) $args['ap_icas_trans_dim_br'] + 4 * (int) $args['ap_icas_trans_dim_h'] ;
+	$Bp = (float) $args['ap_icas_trans_dim_br'] + 4 * (float) $args['ap_icas_trans_dim_h'] ;
 	$pinten_fis_ilim = 5;
-	$pinten_fis_Ii = ( (int) $args['ap_icas_trans_final_spur_horiz_crack_length']  + (int) $args['ap_icas_trans_final_spur_vert_crack_length'] ) / $Bp;
+	$pinten_fis_Ii = ( (float) $args['ap_icas_trans_final_spur_horiz_crack_length']  + (float) $args['ap_icas_trans_final_spur_vert_crack_length'] ) / $Bp;
 	$sum += 0.45 * min( $pinten_fis_Ii / $pinten_fis_ilim, 1 );
 	
 	
 
 	// Desprindere
 	$pinten_despr_ilim = 1;
-	$pinten_despr_Ii =  ( (int) $args['ap_icas_trans_final_spur_detach_left'] + (int) $args['ap_icas_trans_final_spur_detach_right']  + (int) $args['ap_icas_trans_final_spur_detach_center'] ) / ( 3 * 100 );
+	$pinten_despr_Ii =  ( (float) $args['ap_icas_trans_final_spur_detach_left'] + (float) $args['ap_icas_trans_final_spur_detach_right']  + (float) $args['ap_icas_trans_final_spur_detach_center'] ) / ( 3 * 100 );
 	
 	$sum += 1.18 * min( $pinten_despr_Ii / $pinten_despr_ilim , 1 );
 	
 	// Eroziune
 	$pinten_eroz_ilim = 50;
-	$pinten_eroz_Ii = (int) $args['ap_icas_trans_final_spur_erosion_height'] * (int) $args['ap_icas_trans_final_spur_erosion_percent']  / 100 ;
+	$pinten_eroz_Ii = (float) $args['ap_icas_trans_final_spur_erosion_height'] * (float) $args['ap_icas_trans_final_spur_erosion_percent']  / 100 ;
 	$sum += 0.38 * min( $pinten_eroz_Ii / $pinten_eroz_ilim , 1 );
 	
 	
@@ -1304,34 +1304,34 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	// ================================================================
 	
 	// decastrare
-	$ye = (int) $args['ap_icas_trans_dim_ye'];	
-	$h = (int) $args['ap_icas_trans_dim_h'];
+	$ye = (float) $args['ap_icas_trans_dim_ye'];	
+	$h = (float) $args['ap_icas_trans_dim_h'];
 	
 	if( $ye + $h == 0 ) return -1 ;
 	
 	$decas_ilim = 1;
-	$decas_Ii = ( (int) $args['ap_icas_trans_damage_dec_left'] + (int) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
+	$decas_Ii = ( (float) $args['ap_icas_trans_damage_dec_left'] + (float) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
 	
 	
 	$sum += 2.41 * min( $decas_Ii / $decas_ilim , 1 );
 	
 	// afuiere
 	$afuiere_ilim = 2;
-	$afuiere_Ii = (int) $args['ap_icas_trans_damage_af_height'] * (int) $args['ap_icas_trans_damage_af_percent'] / 100 ;	
+	$afuiere_Ii = (float) $args['ap_icas_trans_damage_af_height'] * (float) $args['ap_icas_trans_damage_af_percent'] / 100 ;	
 	$sum +=  1.79 * min( $afuiere_Ii / $afuiere_ilim , 1 );
 	
 	
 	// fisurare	
-	$lo = (int) $args['ap_icas_trans_damage_h_crak_dev_l'] + (int) $args['ap_icas_trans_damage_h_crak_undev_l'];
-	$lv = (int) $args['ap_icas_trans_damage_v_crak_dev_l'] + (int) $args['ap_icas_trans_damage_v_crak_undev_l'];
+	$lo = (float) $args['ap_icas_trans_damage_h_crak_dev_l'] + (float) $args['ap_icas_trans_damage_h_crak_undev_l'];
+	$lv = (float) $args['ap_icas_trans_damage_v_crak_dev_l'] + (float) $args['ap_icas_trans_damage_v_crak_undev_l'];
 	
-	$b = (int) $args['ap_icas_trans_dim_b'];
+	$b = (float) $args['ap_icas_trans_dim_b'];
 	
 	if( $b == 0 ){
 		return -1;
 	}
 	
-	$fisurare_ilim = 5;
+	$fisurare_ilim = 10;
 	$fisurare_Ii = ($lo / $b) + $lv / ($ye + $h );
 	
 	$sum += 2.15 * min( $fisurare_Ii / $fisurare_ilim , 1);	
@@ -1339,19 +1339,19 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	
 	// desprindere zona deversata
 	$desrp_zona_dev_ilim = 1;
-	$desrp_zona_dev_Ii = (int) $args['ap_icas_trans_damage_detach_dev'] / 100;
+	$desrp_zona_dev_Ii = (float) $args['ap_icas_trans_damage_detach_dev'] / 100;
 	$sum += 5.23 * min( $desrp_zona_dev_Ii / $desrp_zona_dev_ilim , 1 );
 	
 	
 	// desprindere aripi 
 	$desrp_aripi_ilim = 1;
-	$desrp_aripi_Ii = ( (int) $args['ap_icas_trans_damage_detach_undev_left'] + (int) $args['ap_icas_trans_damage_detach_undev_right'] ) / ( 2 * 100 ) ; // medium between the two
+	$desrp_aripi_Ii = ( (float) $args['ap_icas_trans_damage_detach_undev_left'] + (float) $args['ap_icas_trans_damage_detach_undev_right'] ) / ( 2 * 100 ) ; // medium between the two
 	$sum += 9.66 * min( $desrp_aripi_Ii / $desrp_aripi_ilim , 1 );
 	
 	
 	// Eroziune
 	$eroziune_ilim = 50;
-	$eroziune_Ii = (int) $args['ap_icas_trans_damage_erosion_height'] * ((int) $args['ap_icas_trans_damage_erosion_percent'] /100 );
+	$eroziune_Ii = (float) $args['ap_icas_trans_damage_erosion_height'] * ((float) $args['ap_icas_trans_damage_erosion_percent'] /100 );
 	$sum += 1.92 *  min( $eroziune_Ii / $eroziune_ilim, 1 );
 /* 	error_log('$eroziune_Ii ' . $eroziune_Ii);
 	
@@ -1373,7 +1373,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$total_length = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$total_length += (int) $args['ap_icas_long_cons_length'];
+		$total_length += (float) $args['ap_icas_long_cons_length'];
 	}
 	
 	// if we cannot calculate total length, return -1
@@ -1389,7 +1389,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$ponder_sum = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$ponder_sum += (int) $val * (int) $args['ap_icas_long_apron_craks_nr'][$key] * (int) $args['ap_icas_long_apron_damage_percent'][$key] / 100;
+		$ponder_sum += (float) $val * (float) $args['ap_icas_long_apron_craks_nr'][$key] * (float) $args['ap_icas_long_apron_damage_percent'][$key] / 100;
 	}
 	
 	$rad_fis_ilim = 5;
@@ -1402,7 +1402,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$ponder_sum = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$ponder_sum += (int) $val * (int) $args['ap_icas_long_apron_displaced'][$key] / 100;
+		$ponder_sum += (float) $val * (float) $args['ap_icas_long_apron_displaced'][$key] / 100;
 	}
 	
 	$rad_despr_ilim = 1;
@@ -1414,7 +1414,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$ponder_sum = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$ponder_sum += (int) $val * (int) $args['ap_icas_long_apron_displaced'][$key] / 100;
+		$ponder_sum += (float) $val * (float) $args['ap_icas_long_apron_displaced'][$key] / 100;
 	}
 	
 	$rad_despr_ilim = 1;
@@ -1432,9 +1432,9 @@ function ap_icas_calculate_ys_for_long( $args ){
 	$lv = 0;
 	$lr = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$lo += (int) $args['ap_icas_long_sidewall_left_horiz_length'][$key] + (int) $args['ap_icas_long_sidewall_right_horiz_length'][$key] ;
-		$lv += (int) $args['ap_icas_long_sidewall_left_vert_length'][$key] + (int) $args['ap_icas_long_sidewall_right_vert_length'][$key] ;
-		$lr += (int) $args['ap_icas_long_cons_length'][$key];
+		$lo += (float) $args['ap_icas_long_sidewall_left_horiz_length'][$key] + (float) $args['ap_icas_long_sidewall_right_horiz_length'][$key] ;
+		$lv += (float) $args['ap_icas_long_sidewall_left_vert_length'][$key] + (float) $args['ap_icas_long_sidewall_right_vert_length'][$key] ;
+		$lr += (float) $args['ap_icas_long_cons_length'][$key];
 	}
 	
 	$zid_fis_ilim = 5;
@@ -1448,7 +1448,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$ponder_sum = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$ponder_sum += (int) $val * ( (int) $args['ap_icas_long_sidewall_left_displaced'][$key] + (int) $args['ap_icas_long_sidewall_right_displaced'][$key] ) / ( 2 * 100 );
+		$ponder_sum += (float) $val * ( (float) $args['ap_icas_long_sidewall_left_displaced'][$key] + (float) $args['ap_icas_long_sidewall_right_displaced'][$key] ) / ( 2 * 100 );
 	}
 	
 	$rad_despr_ilim = 1;
@@ -1462,7 +1462,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 
 	$ponder_sum = 0;
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$ponder_sum += (int) $val * ( (int) $args['ap_icas_long_sidewall_left_abrasion_deep'][$key] * (int) $args['ap_icas_long_sidewall_left_abrasion_percent'][$key] + (int) $args['ap_icas_long_sidewall_right_abrasion_deep'][$key] * (int) $args['ap_icas_long_sidewall_right_abrasion_percent'][$key] ) / ( 2 * 100 );
+		$ponder_sum += (float) $val * ( (float) $args['ap_icas_long_sidewall_left_abrasion_deep'][$key] * (float) $args['ap_icas_long_sidewall_left_abrasion_percent'][$key] + (float) $args['ap_icas_long_sidewall_right_abrasion_deep'][$key] * (float) $args['ap_icas_long_sidewall_right_abrasion_percent'][$key] ) / ( 2 * 100 );
 	}
 	
 	$rad_despr_ilim = 50;
@@ -1477,7 +1477,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	// find Hz, the max deep from all sectors
 	$Hz_arr = array();
 	foreach ( $args['ap_icas_long_cons_length'] as $key => $val ){
-		$Hz_arr[] = (int) $args['ap_icas_long_cons_deep'][$key];
+		$Hz_arr[] = (float) $args['ap_icas_long_cons_deep'][$key];
 	}
 	
 	$Hz = max( $Hz_arr );
@@ -1491,8 +1491,8 @@ function ap_icas_calculate_ys_for_long( $args ){
 		foreach ( $args['ap_icas_long_spur_spur_nr'][$key] as $spur_key => $spur_val ) { 
 			
 			if( $spur_val ) { // do not count unmarked spurs
-				$Ast += (int) $args['ap_icas_long_spur_decastr_left'][$key][$spur_key] ;
-				$Adr += (int) $args['ap_icas_long_spur_decastr_right'][$key][$spur_key] ;
+				$Ast += (float) $args['ap_icas_long_spur_decastr_left'][$key][$spur_key] ;
+				$Adr += (float) $args['ap_icas_long_spur_decastr_right'][$key][$spur_key] ;
 				$total_pinteni++ ;
 			}
 		}
@@ -1514,8 +1514,8 @@ function ap_icas_calculate_ys_for_long( $args ){
 		foreach ( $args['ap_icas_long_spur_spur_nr'][$key] as $spur_key => $spur_val ) {
 				
 			if( $spur_val ) { // do not count unmarked spurs
-				$Lo += (int) $args['ap_icas_long_spur_horiz_lenght'][$key][$spur_key] ;
-				$Lv += (int) $args['ap_icas_long_spur_vert_lenght'][$key][$spur_key] ;
+				$Lo += (float) $args['ap_icas_long_spur_horiz_lenght'][$key][$spur_key] ;
+				$Lv += (float) $args['ap_icas_long_spur_vert_lenght'][$key][$spur_key] ;
 				$total_pinteni++ ;
 			}
 		}
@@ -1539,7 +1539,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 		foreach ( $args['ap_icas_long_spur_spur_nr'][$key] as $spur_key => $spur_val ) {
 	
 			if( $spur_val ) { // do not count unmarked spurs
-				$afuiere += (int) $args['ap_icas_long_spur_afuieri_height'][$key][$spur_key] * (int) $args['ap_icas_long_spur_afuieri_percent'][$key][$spur_key] / 100;
+				$afuiere += (float) $args['ap_icas_long_spur_afuieri_height'][$key][$spur_key] * (float) $args['ap_icas_long_spur_afuieri_percent'][$key][$spur_key] / 100;
 				$total_pinteni ++ ;
 			}
 		}
@@ -1562,7 +1562,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 		foreach ( $args['ap_icas_long_spur_spur_nr'][$key] as $spur_key => $spur_val ) {
 	
 			if( $spur_val ) { // do not count unmarked spurs
-				$pinteni_desprindere_aripi_Ii += ( (int) $args['ap_icas_long_spur_displaced_left'][$key][$spur_key] * (int) $args['ap_icas_long_spur_displaced_right'][$key][$spur_key] ) / ( 2 * 100 );
+				$pinteni_desprindere_aripi_Ii += ( (float) $args['ap_icas_long_spur_displaced_left'][$key][$spur_key] * (float) $args['ap_icas_long_spur_displaced_right'][$key][$spur_key] ) / ( 2 * 100 );
 			}
 		}
 	}
@@ -1580,7 +1580,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 		foreach ( $args['ap_icas_long_spur_spur_nr'][$key] as $spur_key => $spur_val ) {
 	
 			if( $spur_val ) { // do not count unmarked spurs
-				$pinteni_desprindere_centrala_Ii +=  (int) $args['ap_icas_long_spur_displaced_center'][$key][$spur_key] / 100 ;
+				$pinteni_desprindere_centrala_Ii +=  (float) $args['ap_icas_long_spur_displaced_center'][$key][$spur_key] / 100 ;
 			}
 		}
 	}
@@ -1598,7 +1598,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 		foreach ( $args['ap_icas_long_spur_spur_nr'][$key] as $spur_key => $spur_val ) {
 	
 			if( $spur_val ) { // do not count unmarked spurs
-				$pinteni_sum_eroz +=  (int) $args['ap_icas_long_spur_abrasion_deep'][$key][$spur_key] * (int) $args['ap_icas_long_spur_abrasion_percent'][$key][$spur_key] / 100 ;
+				$pinteni_sum_eroz +=  (float) $args['ap_icas_long_spur_abrasion_deep'][$key][$spur_key] * (float) $args['ap_icas_long_spur_abrasion_percent'][$key][$spur_key] / 100 ;
 				$pinteni++;
 			}
 		}
