@@ -361,8 +361,9 @@ function ap_icas_get_construction_transversal_data_table( $id ){
 			'ap_icas_trans_apron_detach',
 			'ap_icas_trans_apron_teeth_detach',
 			'ap_icas_trans_apron_detach_counter_dam',
+			'ap_icas_trans_apron_erosion_height',
 			'ap_icas_trans_apron_erosion_percent',
-			'ap_icas_trans_damage_erosion_height'
+
 	);
 
 	foreach ( $apron_damages_arr as $dam ){

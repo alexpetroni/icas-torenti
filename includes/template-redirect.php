@@ -13,10 +13,10 @@ function ap_icas_template_redirect(){
 	if( isset( $_GET['download'] ) && 'download_list' == $_GET['download'] ){
 		
 			$q_args = ap_icas_get_constructions_query_args_from_str( $_SERVER['QUERY_STRING'] );;
-			error_log ('start Constructions_WP_Query ' );
+			//error_log ('start Constructions_WP_Query ' );
 		$c = new Download_Transversal_Constructions_WP_Query( $q_args['general'] );
 		
-		error_log ('Constructions_WP_Query '.print_r($c, 1) );
+		//error_log ('Constructions_WP_Query '.print_r($c, 1) );
 		
 		// output headers so that the file is downloaded rather than displayed
 		header('Content-Type: text/csv; charset=utf-8');
@@ -31,16 +31,17 @@ function ap_icas_template_redirect(){
 		if( false !== $limit_pos ){
 			$query = substr( $query , 0, $limit_pos );
 		}
-		error_log ('$query NO limits '.print_r($query, 1) );
+		//error_log ('$query NO limits '.print_r($query, 1) );
 		$results = $wpdb->get_results( $query, ARRAY_A );
 		
-		error_log ('$results '.print_r($results, 1) );
+		//error_log ('$results '.print_r($results, 1) );
 		
 		if( empty ($results ) ){
 			fputcsv($output, array('No result found'));
 		}else{
 			
 			$top_header = array_merge(
+					array('Id'),
 					array('Date generale') , array_fill(0, 7, " "),  
 					array('Elemente dimensionale') , array_fill(0, 12, " "), 
 					array('Materiale de constructii') , array_fill(0, 5, " "),
@@ -72,6 +73,7 @@ function ap_icas_template_redirect(){
 			
 			// output the column headings
 			fputcsv($output, array(
+					' ',
 					'An inventariere', 
 					'Cod cadastral', 
 					'Denumire bazin',
@@ -182,10 +184,15 @@ function ap_icas_template_redirect(){
 				);
 			
 			foreach ( $results as $id ){
+				//error_log($id['ID'].' memory: '. memory_get_usage() );
 				$c = new Icas_Construction( $id['ID'] );
+				
+
 				fputcsv($output, array(
+						$id['ID'],
 						$c->get_meta_as_string('ap_icas_construction_review_date'),
 						$c->get_cadastral_code(),
+						
 						$c->get_meta_as_string('ap_icas_basin_name'), // denumire bazin
 						$c->get_meta_as_string('ap_icas_construction_code'), // cod lucrare
 
@@ -296,7 +303,7 @@ function ap_icas_template_redirect(){
 						
 						
 						// Ys
-						$c->get_meta_as_string('ap_icas_construction_ys'),
+						$c->get_meta_as_string('ap_icas_construction_ys'), 
 						));
 			}
 			

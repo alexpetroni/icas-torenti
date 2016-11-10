@@ -5,9 +5,8 @@ class Icas_General_Data_Metabox{
 	
 	
 	public static function get_fields(){
-		$fields= array(
-				//temporar
-				'test_ys',
+		$fields = array(
+				'_original_Ys',
 				'ap_icas_construction_latitude_deg',
 				'ap_icas_construction_latitude_min',
 				'ap_icas_construction_latitude_sec' ,
@@ -50,10 +49,6 @@ class Icas_General_Data_Metabox{
 		}
 		
 		extract($meta_arr);	
-		
-		echo '<p>';
-		echo '<h3>Test Ys '. (isset( $test_ys ) ? $test_ys : '') .'</h3>';
-		echo '</p>';
 		
 		// get location terms 		
 		$locations_terms = wp_get_object_terms( $post->ID, 'icas_location' );
@@ -178,7 +173,15 @@ class Icas_General_Data_Metabox{
 				'label'	=>	"<b>Ys</b>");
 		ap_icas_get_form_element( $ys );
 		
-		echo '</p><p>';
+// ==> DE STERS		
+		if( $_original_Ys ){
+			echo 'anterior: '. $_original_Ys;
+		}
+		echo '</p>';
+		
+
+		
+		echo '<p>';
 		
 		// Construction date
 		$years_arr = array('' => __("Selecteaza", 'icas'));
@@ -318,9 +321,9 @@ class Icas_General_Data_Metabox{
 		
 		
 		
-		$test_ys = ap_icas_calculate_ys( $_POST );
+		$ys = ap_icas_calculate_ys( $_POST );
 		
-		update_post_meta( $post_id, 'test_ys', $test_ys );
+		update_post_meta( $post_id, 'ap_icas_construction_ys', $ys );
 	}
 
 

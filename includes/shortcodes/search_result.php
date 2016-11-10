@@ -82,7 +82,7 @@ function ap_icas_search_result(){
 		       <div class="tabs-panel is-active" id="constructions_list">      
      
 		<?php 
-		if( $transversal_query || $longitudinal_query ){
+		if( $transversal_query ){
 			parse_str( $_SERVER['QUERY_STRING'], $qs );
 			$qs['download'] = 'download_list';
 			$download_link = http_build_query( $qs );
@@ -105,9 +105,11 @@ function ap_icas_search_result(){
 			
 			$cod_cadastral =  get_the_title();
 			
-			$cod_cadastral = substr(get_the_title(), 0, strpos(get_the_title(), '#'));
+			$diez_pos = strpos(get_the_title(), '#');
 			
-			$cod_lucrare = substr(get_the_title(), strpos(get_the_title(), '#'));
+			$cod_cadastral = $diez_pos ? substr(get_the_title(), 0, strpos(get_the_title(), '#') ) : get_the_title();
+			
+			$cod_lucrare = $diez_pos ? substr(get_the_title(), strpos(get_the_title(), '#')) : '';
 			
 			echo '<tr>';
 			echo '<td><a href="'.get_permalink().'">'. $cod_cadastral . '</a></td>';
@@ -120,9 +122,9 @@ function ap_icas_search_result(){
 		echo '</tbody></table>';
 		
 		echo '<div class="row"><div class="small-6 columns">';
-		next_posts_link(__("Urmatoarele rezultate", "icas"), $search_query->max_num_pages);
-		echo '</div><div class="small-6 columns">';
 		previous_posts_link(__("Rezultatele anterioare", "icas")); 
+		echo '</div><div class="small-6 columns">';		
+		next_posts_link(__("Urmatoarele rezultate", "icas"), $search_query->max_num_pages);
 		echo '</div></div>'; // row
 		
 		echo '</div>'; // #panel1v

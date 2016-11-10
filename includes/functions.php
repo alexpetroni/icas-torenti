@@ -1,5 +1,10 @@
 <?php
 
+
+function ap_replace_comma($s){
+	return str_replace(',', '.', $s);
+}
+
 function ap_log( $x = null , $message = '' ){
 	
 	error_log("\n".__FILE__ .( $message ? "\n\n # ".$message : '') ."\n\n". print_r( $x, 1)  ."\n\n\n\n");
@@ -1108,7 +1113,7 @@ function ap_icas_calculate_ys( $args = array() ){
 	
 	if( 'trans' == $args['ap_icas_construction_type'] ){ // transversals
 		
-		$mat_term_na = get_term_by('slug', $args['mat_apron'],  'na' );		
+		$mat_term_na = get_term_by('slug','na', 'mat_apron' );		
 		
 		if( empty( $args['ap_icas_trans_dim_lr'] ) || ( $mat_term_na && $mat_term_na->id == $args['mat_apron'] ) ){
 			return ap_icas_calculate_ys_for_trans_without_apron( $args ); // without apron
@@ -1122,9 +1127,11 @@ function ap_icas_calculate_ys( $args = array() ){
 
 
 // ====================================================================
-//				LUCRARI TRANSVERSALE FARA RADIER
+//				LUCRARI TRANSVERSALE CU RADIER
 // ====================================================================
 function ap_icas_calculate_ys_for_trans_with_apron( $args ){
+	// replace ',' with '.'
+	$args = array_map("ap_replace_comma", $args);
 	
 	$sum = 0;
 	// ================================================================
@@ -1135,7 +1142,9 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	$ye = (float) $args['ap_icas_trans_dim_ye'];	
 	$h = (float) $args['ap_icas_trans_dim_h'];
 	
-	if( $ye + $h == 0 ) return -1 ;
+	if( $ye + $h == 0 ){
+		return -1 ;
+	}
 	
 	$decas_ilim = 1;
 	$decas_Ii = ( (float) $args['ap_icas_trans_damage_dec_left'] + (float) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
@@ -1158,6 +1167,7 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	if( $b == 0 ){
 		return -1;
+		
 	}
 	
 	$fisurare_ilim = 10;
@@ -1285,19 +1295,17 @@ function ap_icas_calculate_ys_for_trans_with_apron( $args ){
 	
 	$YaREF = 31.32;
 	
-	error_log('$sum '. $sum);
-	error_log('sqrt( $sum ) '.sqrt( $sum ));
-	error_log('( 1000 / $YaREF ) * sqrt( $sum ) '. (( 1000 / $YaREF ) * sqrt( $sum )));
-	
 	$ys = 100 - ( 1000 / $YaREF ) * sqrt( $sum );
 	
-	return 'cu radier : '. $ys;
+	return round($ys, 2);
 }
 
 // ====================================================================
 //				LUCRARI TRANSVERSALE FARA RADIER
 // ====================================================================
 function ap_icas_calculate_ys_for_trans_without_apron( $args ){	
+	
+	$args = array_map("ap_replace_comma", $args);
 	
 	$sum = 0;
 	// ================================================================
@@ -1308,7 +1316,10 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	$ye = (float) $args['ap_icas_trans_dim_ye'];	
 	$h = (float) $args['ap_icas_trans_dim_h'];
 	
-	if( $ye + $h == 0 ) return -1 ;
+	if( $ye + $h == 0 ){
+		// error_log('fara radier $ye + $h == 0 , ye = '. $ye. ' $h ='.$h );
+		return -1 ;
+	}
 	
 	$decas_ilim = 1;
 	$decas_Ii = ( (float) $args['ap_icas_trans_damage_dec_left'] + (float) $args['ap_icas_trans_damage_dec_right'] ) / ( $ye + $h );
@@ -1329,6 +1340,7 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	$b = (float) $args['ap_icas_trans_dim_b'];
 	
 	if( $b == 0 ){
+		// error_log('fara radier $b == 0 ');
 		return -1;
 	}
 	
@@ -1354,22 +1366,21 @@ function ap_icas_calculate_ys_for_trans_without_apron( $args ){
 	$eroziune_ilim = 50;
 	$eroziune_Ii = (float) $args['ap_icas_trans_damage_erosion_height'] * ((float) $args['ap_icas_trans_damage_erosion_percent'] /100 );
 	$sum += 1.92 *  min( $eroziune_Ii / $eroziune_ilim, 1 );
-/* 	error_log('$eroziune_Ii ' . $eroziune_Ii);
-	
-	error_log('$eroziune_Ii / $eroziune_ilim ' . $eroziune_Ii / $eroziune_ilim);
-	error_log('min( $eroziune_Ii / $eroziune_ilim, 1 ) ' . min( $eroziune_Ii / $eroziune_ilim, 1) ); */
+
 	
 	$YaREF = 38.59;
 	
 	$ys = 100 - ( 1000 / $YaREF ) * sqrt( $sum );
 	
-	return 'fara radier : '. $ys;
+	return round($ys, 2);
 	
 }
 
 
 function ap_icas_calculate_ys_for_long( $args ){
-		
+	
+	$args = array_map("ap_replace_comma", $args);
+	
 	$sum = 0;
 	
 	$total_length = 0;
@@ -1620,7 +1631,7 @@ function ap_icas_calculate_ys_for_long( $args ){
 	
 	$ys = 100 - ( 1000 / $YaREF ) * sqrt( $sum );
 	
-	return 'longitudinal : '. $ys;
+	return round($ys, 2);
 	
 }
 

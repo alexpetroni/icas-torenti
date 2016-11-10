@@ -129,7 +129,7 @@ function ap_icas_ys_distribution(){
 	
 	$q = new Ys_Histo_WP_Query( $selection_query_args,  $sectors_selection_query_args );
 	
-	error_log('Ys_Histo_WP_Query '. print_r($q, 1));
+	// error_log('Ys_Histo_WP_Query '. print_r($q, 1));
 	
 	$results = array();
 	
@@ -404,7 +404,7 @@ function ys_trans_material_construction_distribution(){
 
 	$q = new Ys_Trans_Mat_Constr_Wp_Query( $selection_query_args );
 
-	error_log('Ys_Trans_Mat_Constr_Wp_Query '. print_r($q, 1));
+	// error_log('Ys_Trans_Mat_Constr_Wp_Query '. print_r($q, 1));
 
 	$results = array();
 
@@ -443,7 +443,7 @@ function ys_long_material_construction_distribution(){
 
 	$q = new Ys_Trans_Mat_Constr_Wp_Query( $selection_query_args );
 
-	error_log('Ys_Trans_Mat_Constr_Wp_Query '. print_r($q, 1));
+	//error_log('Ys_Trans_Mat_Constr_Wp_Query '. print_r($q, 1));
 
 	$results = array();
 
@@ -480,9 +480,9 @@ function ap_icas_granulometry_distribution(){
 	
 	$req = $q->request;
 	
-	error_log('Granulometries_WP_Query req '. print_r($req, 1));
+	//error_log('Granulometries_WP_Query req '. print_r($req, 1));
 	
-	error_log('Granulometries_WP_Query '. print_r($q, 1));
+	//error_log('Granulometries_WP_Query '. print_r($q, 1));
 	
 	$req = substr( $req, 0, strpos($req, 'LIMIT' ) );
 
@@ -503,7 +503,7 @@ function ap_icas_granulometry_distribution(){
 		}
 	}
 	
-	error_log( 'results '. print_r($results, 1));
+	//error_log( 'results '. print_r($results, 1));
 	
 	wp_send_json( $results );
 	die();
